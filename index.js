@@ -44,7 +44,22 @@ class Airplane {
 */
 
 class Person {
-  
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+  eat(food){
+    if(this.stomach.length < 10){
+      this.stomach.push(food);
+    }
+  }
+  poop(){
+    this.stomach = [];
+  }
+  toString(){
+    return `${this.name}, ${this.age}`;
+  }
 }
 
 /*
@@ -62,7 +77,26 @@ class Person {
 */
 
 class Car {
-  
+  constructor(model, mpg){
+    this.model = model;
+    this.milesPerGallon = mpg;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank += gallons;
+  }
+  drive(miles){
+    let posDis = this.tank*this.milesPerGallon;
+    if(miles >= posDis){
+      this.tank = 0;
+      this.odometer += posDis;
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    } else {
+      this.tank -= (miles/this.milesPerGallon);
+      this.odometer += miles;
+    }
+  }
 }
 
 /*
@@ -79,7 +113,14 @@ class Car {
 */
 
 class Lambdasian {
-  
+  constructor(props){
+    this.name = props.name;
+    this.age = props.age;
+    this.location = props.location;
+  }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  }
 }
 
 /*
@@ -97,8 +138,28 @@ class Lambdasian {
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
 
-class Instructor {
-
+class Instructor extends Lambdasian{
+  constructor(props){
+    super(props);
+    this.specialty = props.specialty;
+    this.favLanguage = props.favLanguage;
+    this.catchPhrase = props.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
+  newGrade(student){
+    student.grade += (Math.random() - 0.3)*10;
+    if(student.grade > 100){
+      student.grade = 100;
+    } else if (student.grade < 0){
+      student.grade = 0;
+    }
+    return `${student.name} has a score of ${student.grade}.`
+  }
 }
 
 /*
@@ -117,8 +178,30 @@ class Instructor {
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
 
-class Student {
-   
+class Student extends Lambdasian{
+   constructor(props){
+     super(props);
+     this.previousBackground = props.previousBackground;
+     this.className = props.className;
+     this.favSubjects = props.favSubjects;
+     this.grade = props.grade;
+   }
+   listSubjects(){
+      return `Loving ${this.favSubjects.toString()}`;
+   }
+   PRAssignment(subject){
+      return `${this.name} has submitted a PR for ${subject}`;
+   }
+   sprintChallenge(subject){
+      return `${this.name} has begun sprint challenge on ${subject}`;
+   }
+   graduate(){
+    if(this.grade >= 70){
+      return `${this.name} has graduated from Bloomtech!`;
+    } else {
+      return `${this.name} needs to study harder...`;
+    }
+   }
 }
 
 /*
@@ -135,8 +218,18 @@ class Student {
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
 
-class ProjectManager {
-   
+class ProjectManager extends Instructor{
+   constructor(props){
+     super(props);
+     this.gradClassName = props.gradClassName;
+     this.favInstructor = props.favInstructor;
+   }
+   standUp(channel){
+      return `${this.name} announces to ${channel}, @${channel} standy times!`;
+   }
+   debugsCode(student, subject){
+     return `${this.name} debugs ${student.name}'s code on ${subject}`;
+   }
 }
 
 /*
@@ -148,6 +241,67 @@ class ProjectManager {
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
 
+const tom = new Instructor({
+  name: "Tom",
+  age: 37,
+  location: "California",
+  specialty: "Teaching",
+  favLanguage: "Javascript",
+  catchPhrase: "That's the way it works!"
+});
+
+const steve = new ProjectManager({
+  name: "Steve",
+  age: 25,
+  location: "Florida",
+  specialty: "React",
+  favLanguage: "CSS",
+  catchPhrase: "Did I do that?",
+  gradClassName: "WEB40",
+  favInstructor: "Tom"
+});
+
+const tim = new Student({
+  name: "Tim",
+  age: 32,
+  location: "Hawaii",
+  className: "WEB55",
+  favSubjects: ["HTML", "CSS", "JavaScript"],
+  grade: 40
+})
+
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
+console.log(tom.newGrade(tim));
+console.log(tim.graduate());
+console.log(steve.newGrade(tim));
+console.log(tim.graduate());
 
 //End of Challenge
 /* 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 */
